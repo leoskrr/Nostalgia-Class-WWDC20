@@ -5,30 +5,32 @@ import Foundation
 public class MenuScene: SKScene {
     
     var faceNode: SKSpriteNode?
+    var gameName: SKLabelNode?
+    var button: SKButtonNode?
+    let cam = SKCameraNode()
     
     func basicReset() {
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.scaleMode = .aspectFill
-        self.backgroundColor = .black
+        self.backgroundColor = bgColor
     }
     
     func configTitle() {
-        let gameName = createHeading(withText: "NOSTALGIA CLASS", position: CGPoint(x: frame.midX, y: frame.midY + 120))
+        gameName = createHeading(withText: "NOSTALGIA CLASS", position: CGPoint(x: frame.midX, y: frame.midY + 120))
         
-        gameName.run(.repeatForever(.sequence([
+        gameName?.run(.repeatForever(.sequence([
             .moveTo(y: frame.midY + 100, duration: 1),
             .moveTo(y: frame.midY + 120, duration: 1),
         ])))
         
-        self.addChild(gameName)
+        self.addChild(gameName!)
     }
     
     func addFaceNode(){
-        faceNode = SKSpriteNode(imageNamed: "face")
+        faceNode = SKSpriteNode(imageNamed: "face-0")
         faceNode?.size = CGSize(width: 250, height: 250)
         faceNode?.position = CGPoint(x: frame.midX + 100, y: frame.midY + 120)
         self.addChild(faceNode!)
-        
     }
     
     func animateFaceNode(){
@@ -51,20 +53,15 @@ public class MenuScene: SKScene {
             changeFontColor
         ])))
         
-        let button = SKButtonNode(image: nil, label: btLabel){
-
-            let reveal = SKTransition.reveal(with: .left,
-                                             duration: 1)
-            
-            let newScene = IntroScene(size: CGSize(width: 1024, height: 768))
-            
-            self.view?.presentScene(newScene,
-                                    transition: reveal)
+        button = SKButtonNode(image: nil, label: btLabel){
+            let reveal = SKTransition.reveal(with: .left,duration: 1)
+            let newScene = IntroScene(size: viewSize)
+            self.view?.presentScene(newScene,transition: reveal)
         }
         
-        button.position = CGPoint(x: frame.midX, y: frame.midY - 50)
+        button?.position = CGPoint(x: frame.midX, y: frame.midY - 50)
         
-        self.addChild(button)
+        self.addChild(button!)
     }
     
     public override func didMove(to view: SKView) {
@@ -73,8 +70,6 @@ public class MenuScene: SKScene {
         addFaceNode()
         animateFaceNode()
         insertButton()
-        
-        self.backgroundColor = bgColor
         self.addChild(insertAudioBackground(name: "free-run"))
     }
     

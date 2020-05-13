@@ -26,14 +26,15 @@ public func goToScene(scene: SKScene){
     configPlaygroundPage()
 }
 
-public func changeScene(NewScene: SKScene){
-    let reveal = SKTransition.reveal(with: .down,
-                                     duration: 1)
-    
-    let newScene = NewScene
-    newScene.size = skView!.frame.size
-    newScene.scaleMode = .aspectFill
-    
-    scene.view?.presentScene(newScene,
-                            transition: reveal)
-}
+//  public func changeScene(NewScene: SKScene){
+//      let reveal = SKTransition.reveal(with: .down,
+//                                       duration: 1)
+//      
+//      let newScene = NewScene
+//      newScene.size = skView!.frame.size
+//      newScene.scaleMode = .aspectFill
+//      
+//      scene.view?.presentScene(newScene,
+//                              transition: reveal)
+//  }
+//  

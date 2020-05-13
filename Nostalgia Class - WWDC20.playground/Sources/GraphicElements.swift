@@ -36,3 +36,15 @@ public func createHeading(withText text: String, position: CGPoint) -> SKLabelNo
 public func createSubheading(withText text: String){
     
 }
+
+public func createStaticNodeAnimated(withImage image: String, spriteSheet: [SKTexture], size: CGSize, position: CGPoint, timePerFrame: Double) -> SKSpriteNode {
+    
+    var node = SKSpriteNode(imageNamed: image )
+    let spriteSheet = spriteSheet
+    
+    node.size = size
+    node.position = position
+    node.run(.repeatForever(.animate(with: spriteSheet, timePerFrame: timePerFrame)))
+    
+    return node
+}
