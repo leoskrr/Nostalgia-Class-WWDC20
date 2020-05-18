@@ -16,16 +16,16 @@ public class IntroScene: SKScene {
     
     func createSunNode(){
         sunNode = SKSpriteNode(imageNamed: "sun-0")
-        sunNode?.size = CGSize(width: 140, height: 140)
-        sunNode?.position = CGPoint(x: frame.minX/2 - 130, y: frame.maxY/2 + 30)
+        sunNode?.size = CGSize(width: 240, height: 240)
+        sunNode?.position = CGPoint(x: frame.minX/2 - 100, y: frame.maxY/2 + 100)
         
         self.addChild(sunNode!)
     }
     
     func createCloudsNode(){
         cloudsNode = SKSpriteNode(imageNamed: "clouds-0")
-        cloudsNode?.size = CGSize(width: 200, height: 200)
-        cloudsNode?.position = CGPoint(x: frame.minX/2 + 100, y: frame.maxY/2 + 20)
+        cloudsNode?.size = CGSize(width: 300, height: 300)
+        cloudsNode?.position = CGPoint(x: frame.minX/2 + 150, y: frame.maxY/2 + 90)
         
         self.addChild(cloudsNode!)
     }
@@ -35,17 +35,17 @@ public class IntroScene: SKScene {
     }
     
     func createStreetNode() {
-        var streetNode = SKSpriteNode(color: UIColor(red: 0.09, green: 0.04, blue: 0.03, alpha: 1.00), size: CGSize(width: frame.width, height: 100))
+        let streetNode = SKSpriteNode(color: UIColor(red: 0.09, green: 0.04, blue: 0.03, alpha: 1.00), size: CGSize(width: frame.width, height: 100))
         
-        streetNode.position = CGPoint(x: frame.midX, y: frame.minY/2 - 20)
+        streetNode.position = CGPoint(x: frame.midX, y: frame.minY + 50)
         
         self.addChild(streetNode)
     }
     
     func createBusNode() {
         busNode = SKSpriteNode(imageNamed: "bus-0")
-        busNode?.position = CGPoint(x: frame.midX/4 - 350, y: frame.minY/2 + 90)
-        busNode?.size = CGSize(width: 250, height: 250)
+        busNode?.position = CGPoint(x: frame.midX/4 - 350, y: frame.minY + 165)
+        busNode?.size = CGSize(width: 400, height: 400)
         
         self.addChild(busNode!)
     }
@@ -64,8 +64,8 @@ public class IntroScene: SKScene {
     
     func createPlayerNode() {
         playerNode = SKSpriteNode(imageNamed: "myself-0")
-        playerNode?.position = CGPoint(x: 20, y: frame.minY/2 + 85)
-        playerNode?.size = CGSize(width: 110, height: 110)
+        playerNode?.position = CGPoint(x: 37, y: frame.minY + 140)
+        playerNode?.size = CGSize(width: 190, height: 190)
         
         self.addChild(playerNode!)
     }
@@ -80,16 +80,21 @@ public class IntroScene: SKScene {
             .moveTo(x: 700, duration: 4),
             .repeat(.animate(with: spriteSheet, timePerFrame: 0.2), count: 9)
         ]))
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+            self.changeScene()
+        }
+        
     }
     
     func formateLabel(text: String, posY: CGFloat, size: CGFloat) -> SKLabelNode{
-        var label = SKLabelNode()
+        let label = SKLabelNode()
         
         label.text = text
         label.position.x = frame.midX
         label.position.y = posY
         label.fontSize = size
-        label.fontName = "8BIT WONDER"
+        label.fontName = fontName
         label.numberOfLines = 0
         label.preferredMaxLayoutWidth = viewSize.width - 100
         label.fontColor = .white
@@ -100,11 +105,11 @@ public class IntroScene: SKScene {
     }
     
     func createLabels(){
-        var dateLabel: SKLabelNode = formateLabel(text: "22th November, 2019", posY: frame.midY + 120, size: 20)
+        let dateLabel: SKLabelNode = formateLabel(text: "22th November, 2019", posY: frame.midY + 120, size: 20)
         
-        var cityLabel: SKLabelNode = formateLabel(text: "Manaus, Brazil", posY: frame.midY + 90, size: 22)
+        let cityLabel: SKLabelNode = formateLabel(text: "Manaus, Brazil", posY: frame.midY + 90, size: 22)
         
-        var titleLabel: SKLabelNode = formateLabel(text: "My last day in high school", posY: frame.midY + 65, size: 24)
+        let titleLabel: SKLabelNode = formateLabel(text: "My last day in high school", posY: frame.midY + 65, size: 24)
         
         self.addChild(dateLabel)     
         
@@ -125,6 +130,8 @@ public class IntroScene: SKScene {
     }
     
     public override func didMove(to view: SKView) {
+        var audio: SKAudioNode?
+        
         basicReset()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
@@ -145,22 +152,25 @@ public class IntroScene: SKScene {
                 SKTexture(imageNamed: "clouds-0"),
                 SKTexture(imageNamed: "clouds-1")
             ])
+            audio = insertAudioBackground(name: "accelerating")
+            self.addChild(audio!)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 6){
             self.createPlayerNode()
+            audio?.run(.stop())
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 7){
             self.animateBusNode(toX: 750, duration: 4)
+            audio?.run(.play())
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 10){
-            self.busNode?.removeFromParent()
+            //self.busNode?.removeFromParent()
             self.createLabels()
+            audio?.run(.stop())
+
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 12){
             self.animatePlayerNode()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 14.2){
-            self.changeScene()
         }
     }
     

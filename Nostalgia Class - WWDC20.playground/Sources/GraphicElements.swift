@@ -1,13 +1,18 @@
 import SpriteKit
+import Foundation
+import PlaygroundSupport
 
 public func insertAudioBackground(name: String) -> SKAudioNode {
-    let soundNode = SKAudioNode(fileNamed: "\(name).mp3")
+    let soundNode = SKAudioNode(fileNamed: "\(name)")
     soundNode.run(.play())
+    soundNode.run(SKAction.changeVolume(to: 0.5, duration: 3))
     
     return soundNode
+    //self.addChild(soundNode)
+    //soundNode.run(.stop())
 }
 
-func getFont(){
+public func getFont(){
     let fontURL = Bundle.main.url(forResource: "8-BIT WONDER", withExtension: "TTF")
     CTFontManagerRegisterFontsForURL(fontURL! as CFURL, CTFontManagerScope.process, nil)
 }
@@ -24,7 +29,7 @@ func basicConfigs(label: SKLabelNode) -> SKLabelNode{
 }
 
 public func createHeading(withText text: String, position: CGPoint) -> SKLabelNode{
-    var headerNode = SKLabelNode()
+    let headerNode = SKLabelNode()
     
     headerNode.text = text
     headerNode.fontSize = 54
@@ -39,7 +44,7 @@ public func createSubheading(withText text: String){
 
 public func createStaticNodeAnimated(withImage image: String, spriteSheet: [SKTexture], size: CGSize, position: CGPoint, timePerFrame: Double) -> SKSpriteNode {
     
-    var node = SKSpriteNode(imageNamed: image )
+    let node = SKSpriteNode(imageNamed: image )
     let spriteSheet = spriteSheet
     
     node.size = size

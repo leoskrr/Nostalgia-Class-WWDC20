@@ -13,4 +13,3 @@ public let changeFontColor = SKAction.customAction(withDuration: 0) {
         node.fontColor = UIColor(cgColor: colors[Int.random(in: 0..<colors.count)])
     }
 }
-    

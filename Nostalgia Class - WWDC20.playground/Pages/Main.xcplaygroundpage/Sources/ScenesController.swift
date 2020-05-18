@@ -5,13 +5,32 @@ import SpriteKit
 var skView: SKView?
 
 func createView(){
-        skView = SKView(frame: CGRect(origin: .zero, size: viewSize))
+    skView = SKView(frame: CGRect(origin: .zero, size: viewSize))
 }
 
 func configPlaygroundPage(){
-        PlaygroundPage.current.liveView = skView
-        PlaygroundPage.current.wantsFullScreenLiveView = true
+    PlaygroundPage.current.liveView = skView
+    //PlaygroundPage.current.wantsFullScreenLiveView = true
+    
 }
+
+/*
+ 
+ var skView: SKView?
+ skView = SKView(frame: CGRect(origin: .zero, size: CGSize(width: 800, height: 800)))
+ let gameScene = MyScene
+ 
+ gameScene.size = skView!.frame.size
+ 
+ gameScene.scaleMode = .aspectFill
+ 
+ skView!.presentScene(scene, transition: SKTransition.moveIn(with: .right, duration: 10))
+ 
+ configPlaygroundPage()
+
+ 
+ */
+
 
 public func goToScene(scene: SKScene){
     createView()

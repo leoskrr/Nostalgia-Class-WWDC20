@@ -42,10 +42,10 @@ public class MenuScene: SKScene {
     }
     
     func insertButton(){
-        var btLabel = SKLabelNode()
+        let btLabel = SKLabelNode()
         btLabel.fontColor = .white
         btLabel.fontSize = 32
-        btLabel.fontName = "8BIT WONDER"
+        btLabel.fontName = fontName
         btLabel.text = "START"
         
         btLabel.run(.repeatForever(.group([
@@ -70,7 +70,7 @@ public class MenuScene: SKScene {
         addFaceNode()
         animateFaceNode()
         insertButton()
-        self.addChild(insertAudioBackground(name: "free-run"))
+        self.addChild(insertAudioBackground(name: "free-run.mp3"))
     }
     
 }
